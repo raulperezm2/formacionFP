@@ -1,0 +1,123 @@
+/* Add your styles here */
+/* Estilos globales para el cuerpo de la aplicación */
+:host {
+    --lumo-primary-color: #2d5af0;
+    --lumo-border-radius-m: 8px;
+    --vaadin-input-field-value-color: red;
+}
+
+
+
+/* Clase personalizada para botones de éxito */
+vaadin-button.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+vaadin-button.btn-success:hover {
+    background-color: #218838;
+    filter: brightness(1.1);
+}
+
+/* 2. Estilizando los Text Fields (vaadin-text-field) */
+vaadin-text-field {
+    margin-bottom: 1em;
+}
+
+/* Clase personalizada para inputs con estilo "soft" */
+vaadin-text-field.custom-input {
+    background-color: #f8f9fa;
+    border-radius: var(--lumo-border-radius-m);
+}
+
+/* Estilo cuando el campo está enfocado */
+vaadin-text-field.custom-input:focus-within {
+    box-shadow: 0 0 0 2px rgba(45, 90, 240, 0.2);
+}
+
+
+
+/* Selecciona la celda que tiene nuestro nombre de parte */
+vaadin-grid::part(task-link) {
+    color: white; /* Color azul de Vaadin */
+    text-decoration: underline;      /* El subrayado de link */
+    cursor: pointer;                 /* Cursor de mano */
+}
+
+/* Efecto al pasar el ratón por encima de la fila para reforzar la idea */
+vaadin-grid::part(row):hover {
+    background-color: var(--lumo-contrast-5pct);
+}
+
+
+.color-azul vaadin-grid::part(row) {
+    border-radius: var(--color-azul-radius);
+    overflow: hidden; /* asegurar que el contenido se recorte dentro del radio */
+    /* quitar margin porque vaadin-grid virtualiza filas y margin puede no funcionar */
+    background-clip: padding-box;
+    transition: background-color 0.15s ease, transform 0.08s ease;
+}
+
+.color-azul vaadin-grid::part(row):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+
+/* Aplicar fondo y radio a las celdas para que cada fila parezca una tarjeta redondeada */
+.color-azul vaadin-grid::part(cell) {
+    background: var(--lumo-base-color, #ffffff);
+    padding: var(--color-azul-cell-padding-vertical) var(--color-azul-cell-padding-horizontal);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.color-azul vaadin-grid::part(cell):first-child {
+    border-top-left-radius: var(--color-azul-radius);
+    border-bottom-left-radius: var(--color-azul-radius);
+}
+
+.color-azul vaadin-grid::part(cell):last-child {
+    border-top-right-radius: var(--color-azul-radius);
+    border-bottom-right-radius: var(--color-azul-radius);
+}
+
+.color-azul vaadin-grid::part(row):hover ::part(cell) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.color-azul {
+    border: 5px solid blue;
+    border-radius: 15px;
+    /* Muy importante: sin esto, las celdas cuadradas tapan el redondeado */
+    overflow: hidden;
+}
+
+/* 1. Estilizando los Botones (vaadin-button) */
+vaadin-button {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+    background-color: brown;
+}
+
+/* Color naranja  para elementos que lo requieran */
+.color-orange-text {
+    /* Clase contenedor/host para activar filas redondeadas en el vaadin-grid. */
+    color: orange; /* restaurar color naranja */
+    --color-azul-radius: 8px;
+    --color-azul-cell-padding-vertical: 0.5rem;
+    --color-azul-cell-padding-horizontal: 1rem;
+}
+
+/* 3. Estilos de utilidad generales */
+.container-padding {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+vaadin-text-field {
+    --vaadin-input-field-value-color: red;
+}

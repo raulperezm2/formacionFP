@@ -1,0 +1,48 @@
+:host(.color-azul) ::part(cell) {
+  background: var(--lumo-base-color, #ffffff) !important;
+  padding: 0.5rem 1rem !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset !important;
+}
+
+:host(.color-azul) ::part(cell):first-child {
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+
+:host(.color-azul) ::part(cell):last-child {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+/* Separación visual entre filas — no margin en rows virtualizados, usar sombra en celdas para crear separación */
+:host(.color-azul) ::part(row) ::part(cell) {
+  background-clip: padding-box !important;
+}
+
+/* Hover */
+:host(.color-azul) ::part(row):hover ::part(cell) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* Fallback: si la clase está en el grid host pero el themeFor no funciona, soportamos selector en el light DOM */
+vaadin-grid.color-azul::part(cell) {
+  background: var(--lumo-base-color, #ffffff) !important;
+  padding: 0.5rem 1rem !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset !important;
+}
+
+vaadin-grid.color-azul::part(cell):first-child {
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+
+vaadin-grid.color-azul::part(cell):last-child {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
