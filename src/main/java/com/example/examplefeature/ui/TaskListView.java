@@ -49,6 +49,8 @@ class TaskListView extends VerticalLayout {
         description.setAriaLabel("Task description");
         description.setMaxLength(Task.DESCRIPTION_MAX_LENGTH);
         description.setMinWidth("20em");
+        description.setMinLength(20);
+        description.setErrorMessage("Mínimo 20 caracteres");
         description.setRequiredIndicatorVisible(true);
 
         dueDate = new DatePicker();

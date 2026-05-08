@@ -22,6 +22,7 @@ vaadin-button.btn-success:hover {
 /* 2. Estilizando los Text Fields (vaadin-text-field) */
 vaadin-text-field {
     margin-bottom: 1em;
+    color: mediumvioletred;
 }
 
 /* Clase personalizada para inputs con estilo "soft" */

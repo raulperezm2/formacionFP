@@ -39,6 +39,7 @@ public class RegistroView extends VerticalLayout {
         TextField email = new TextField("Email");
         IntegerField edad = new IntegerField("Edad");
 
+
         // Configuración de UI
         H2 titulo = new H2("Sistema de Registro Opplus");
 
@@ -65,9 +66,9 @@ public class RegistroView extends VerticalLayout {
         try {
             binder.writeBean(nuevo);
             repo.save(nuevo);
-            Notification.show("Estudiante guardado correctamente", 3000, 
-                Notification.Position.BOTTOM_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-            
+            Notification.show("Estudiante guardado correctamente", 3000,
+                    Notification.Position.BOTTOM_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
             binder.readBean(new Estudiante()); // Limpiar form con bean vacío
             actualizarTabla();
         } catch (ValidationException e) {
