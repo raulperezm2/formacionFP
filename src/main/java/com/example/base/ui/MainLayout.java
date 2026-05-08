@@ -78,7 +78,7 @@ public final class MainLayout extends AppLayout {
         try {
             var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
             String encoded = URLEncoder.encode(idUser, StandardCharsets.UTF_8);
-            var uri = URI.create("http://localhost:8090/image?iduser=" + encoded);
+            var uri = URI.create("https://svc-0023-00-microservicios-des.apps.infraprev.igrupobbva/image?iduser=" + encoded);
             var builder = HttpRequest.newBuilder().uri(uri).GET().timeout(Duration.ofSeconds(5));
             if (!token.isBlank()) {
                 builder.header("Authorization", "Bearer " + token);
