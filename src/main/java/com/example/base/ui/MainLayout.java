@@ -25,6 +25,10 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.regex.Matcher;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.regex.Pattern;
 
 @Layout
@@ -73,31 +77,45 @@ public final class MainLayout extends AppLayout {
         }
     }
 
+
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     private String fetchUserImageUrl(String idUser) {
         String token = fetchToken();
         try {
-            var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
+            var client = HttpClient.newBuilder()
+                    .connectTimeout(Duration.ofSeconds(3))
+                    .build();
+
             String encoded = URLEncoder.encode(idUser, StandardCharsets.UTF_8);
             var uri = URI.create("https://svc-0023-00-microservicios-des.apps.infraprev.igrupobbva/image?iduser=" + encoded);
+
             var builder = HttpRequest.newBuilder().uri(uri).GET().timeout(Duration.ofSeconds(5));
-            if (!token.isBlank()) {
+            if (token != null && !token.isBlank()) {
                 builder.header("Authorization", "Bearer " + token);
             }
+
             var request = builder.build();
+            // Corregido: HttpResponse.BodyHandlers.ofString()
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
             if (response.statusCode() == 200) {
-                var body = response.body().trim();
-                if (!body.isEmpty()) {
-                    ImageResponseDTO imageResponse = deserializeImageResponse(body);
-                    if (imageResponse.getImagePah() != null && !imageResponse.getImagePah().isBlank()) {
+                String body = response.body();
+                if (body != null && !body.isBlank()) {
+                    // Deserialización aquí
+                    ImageResponseDTO imageResponse = objectMapper.readValue(body, ImageResponseDTO.class);
+
+                    if (!imageResponse.getImagePah().isBlank()) {
                         return imageResponse.getImagePah();
                     }
                 }
             }
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
-        } catch (Exception ignored) {
-            // Silenciar errores y usar fallback
+        } catch (Exception e) {
+            // Loggear el error es buena práctica antes de retornar vacío
+            // System.err.println("Error fetching image: " + e.getMessage());
         }
         return "";
     }
@@ -134,11 +152,12 @@ public final class MainLayout extends AppLayout {
     private static class ImageResponseDTO {
         private final String imagePah;
 
-        ImageResponseDTO(String imagePah) {
+        // Usamos @JsonProperty porque el campo es final y el nombre del JSON debe coincidir
+        public ImageResponseDTO(@JsonProperty("imagePah") String imagePah) {
             this.imagePah = imagePah;
         }
 
-        String getImagePah() {
+        public String getImagePah() {
             return imagePah != null ? imagePah : "";
         }
     }
