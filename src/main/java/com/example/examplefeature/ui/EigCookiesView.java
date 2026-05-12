@@ -34,25 +34,29 @@ public class EigCookiesView extends VerticalLayout {
      */
     private static final int COOKIE_DAYS = 7;
 
+    /**
+     * Create a view to read several different cookies
+     */
     public EigCookiesView() {
-        // 1. Configuración del contenedor principal
+        // Configuración del contenedor principal
         setSpacing(true);
         setClassName("eig-cookies");
         setAlignItems(Alignment.CENTER); // Centra todo horizontalmente
         H2 title = new H2("Multiples Cookies");
-
+        // Campos de entrada
         var nameInput = new TextField("Nombre: ");
         nameInput.setPrefixComponent(VaadinIcon.SPECIALIST.create());
         var emailInput = new EmailField("Email: ");
         emailInput.setPrefixComponent(VaadinIcon.MAILBOX.create());
         var passwordInput = new PasswordField("Contraseña: ");
         passwordInput.setPrefixComponent(VaadinIcon.PASSWORD.create());
-
+        // Separador
         var spacing = new Hr();
         spacing.getStyle().setWidth("25%");
-
+        // Botón guardado
         var saveButton = new Button("Guardar");
         saveButton.setPrefixComponent(VaadinIcon.ADD_DOCK.create());
+        // Contenedor de mensaje
         var greetCointainer = new Span();
 
         var savedData = readCookies();
@@ -62,7 +66,7 @@ public class EigCookiesView extends VerticalLayout {
         } else {
             greetCointainer.setText("Bienvenido");
         }
-
+        // Añadir listener a botón
         saveButton.addClickListener(e -> {
             var nameValue = nameInput.getValue();
             var emailValue = emailInput.getValue();
@@ -70,16 +74,21 @@ public class EigCookiesView extends VerticalLayout {
             saveCookies(new String[]{nameValue, emailValue, passwordValue});
             Notification.show("Cookies guardadas. Refresca la página.");
         });
-
+        // Botón de cambio de vista
         var calcButton = new Button("Calculadora");
         calcButton.setPrefixComponent(VaadinIcon.CALC.create());
         calcButton.addClickListener(e -> {
             getUI().ifPresent(ui -> ui.navigate(CalculadoraView.class));
         });
-
+        // Añadir elementos a la lista
         add(title, greetCointainer, nameInput, emailInput, passwordInput, spacing, saveButton, calcButton);
     }
 
+    /**
+     * Read cookies
+     *
+     * @return Collection with the values stored
+     */
     private String[] readCookies() {
         var cookies = VaadinService.getCurrentRequest().getCookies();
         var savedData = new String[COOKIE_NAMES.length];
@@ -95,6 +104,11 @@ public class EigCookiesView extends VerticalLayout {
         return savedData;
     }
 
+    /**
+     * Save collection to cookies
+     *
+     * @param values Collection to store
+     */
     private void saveCookies(String[] values) {
         var nameCookie = new Cookie(COOKIE_NAMES[0], values[0]);
         var emailCookie = new Cookie(COOKIE_NAMES[1], values[1]);
