@@ -37,6 +37,7 @@ public class CookieView extends VerticalLayout {
             String valor = nombreInput.getValue();
             guardarCookie(valor);
             Notification.show("Cookie guardada. Refresca la página.");
+            getUI().ifPresent(ui -> ui.navigate(CalculadoraView.class));
         });
 
         add(nombreInput, guardarBtn, saludo);
