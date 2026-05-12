@@ -1,6 +1,7 @@
 package com.example.examplefeature.ui;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Span;
@@ -21,15 +22,19 @@ import java.time.Duration;
 
 @Route("eig-cookies")
 @PageTitle("eig-cookies")
-@Menu(order = 4, icon = "vaadin:disc", title = "eig cookies")
-public class EigCookiesView  extends VerticalLayout {
-    /** Nombres de las cookies*/
+@Menu(order = 6, icon = "vaadin:disc", title = "eig cookies")
+@StyleSheet("pabloIR.css")
+public class EigCookiesView extends VerticalLayout {
+    /**
+     * Nombres de las cookies
+     */
     private static final String[] COOKIE_NAMES = {"user-name", "user-email", "user-password"};
-    /** Duración en días de las cookies */
+    /**
+     * Duración en días de las cookies
+     */
     private static final int COOKIE_DAYS = 7;
 
-    public EigCookiesView()
-    {
+    public EigCookiesView() {
         // 1. Configuración del contenedor principal
         setSpacing(true);
         setClassName("eig-cookies");
@@ -51,11 +56,10 @@ public class EigCookiesView  extends VerticalLayout {
         var greetCointainer = new Span();
 
         var savedData = readCookies();
-        if (savedData != null && savedData[0] != null  && !savedData[0].isBlank()) {
+        if (savedData != null && savedData[0] != null && !savedData[0].isBlank()) {
             var greeting = String.format("Hola de nuevo, \"%s\"\nTu email es: \"%s\"\n Tu contraseña tiene %d caracteres.", savedData[0], savedData[1], savedData[2].length());
             greetCointainer.setText(greeting);
-        }
-        else {
+        } else {
             greetCointainer.setText("Bienvenido");
         }
 
@@ -67,28 +71,31 @@ public class EigCookiesView  extends VerticalLayout {
             Notification.show("Cookies guardadas. Refresca la página.");
         });
 
-        add(title, greetCointainer, nameInput, emailInput, passwordInput, spacing, saveButton);
+        var calcButton = new Button("Calculadora");
+        calcButton.setPrefixComponent(VaadinIcon.CALC.create());
+        calcButton.addClickListener(e -> {
+            getUI().ifPresent(ui -> ui.navigate(CalculadoraView.class));
+        });
+
+        add(title, greetCointainer, nameInput, emailInput, passwordInput, spacing, saveButton, calcButton);
     }
 
-    private String[]  readCookies()
-    {
+    private String[] readCookies() {
         var cookies = VaadinService.getCurrentRequest().getCookies();
         var savedData = new String[COOKIE_NAMES.length];
 
-        if (cookies != null)
-            for (Cookie c : cookies) {
-                for (int i = 0; i < COOKIE_NAMES.length; i++) {
-                    if (c.getName().equals(COOKIE_NAMES[i])) {
-                        savedData[i] = c.getValue();
-                    }
+        if (cookies != null) for (Cookie c : cookies) {
+            for (int i = 0; i < COOKIE_NAMES.length; i++) {
+                if (c.getName().equals(COOKIE_NAMES[i])) {
+                    savedData[i] = c.getValue();
                 }
             }
+        }
 
         return savedData;
     }
 
-    private void saveCookies(String[] values)
-    {
+    private void saveCookies(String[] values) {
         var nameCookie = new Cookie(COOKIE_NAMES[0], values[0]);
         var emailCookie = new Cookie(COOKIE_NAMES[1], values[1]);
         var passwordCookie = new Cookie(COOKIE_NAMES[2], values[2]);

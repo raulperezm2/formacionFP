@@ -1,0 +1,38 @@
+
+.eig-cookies {
+    text-align: center;
+}
+
+.eig-cookies input {
+    font-size: 1.25em;
+    padding-bottom: 5px;
+    margin-top: 5px;
+}
+
+.eig-cookies label {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.eig-cookies span {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.eig-cookies vaadin-button {
+    font-size: 1.25em;
+    font-weight: bold;
+    background-color: blue;
+    color: white;
+    padding: 15px 30px;
+}
+
+.eig-cookies vaadin-button:hover {
+    background-color: green;
+    color: white;
+}
+
+.eig-cookies vaadin-button:active {
+    background-color: yellow;
+    color: black;
+}
