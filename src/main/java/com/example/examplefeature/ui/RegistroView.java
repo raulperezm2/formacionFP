@@ -23,7 +23,7 @@ import com.vaadin.flow.router.Route;
 
 @Route("opplus-registro")
 @PageTitle("opplus-registro")
-@Menu(order = 3, icon = "vaadin:calc", title = "opplus registro")
+@Menu(order = 3, icon = "vaadin:pencil", title = "opplus registro")
 public class RegistroView extends VerticalLayout {
 
     private final transient EstudianteRepository repo;
