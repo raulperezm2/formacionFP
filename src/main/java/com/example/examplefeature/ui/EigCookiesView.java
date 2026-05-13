@@ -40,7 +40,7 @@ public class EigCookiesView extends VerticalLayout {
     public EigCookiesView() {
         // Configuración del contenedor principal
         setSpacing(true);
-        setClassName("eig-cookies");
+        setClassName("eig");
         setAlignItems(Alignment.CENTER); // Centra todo horizontalmente
         H2 title = new H2("Multiples Cookies");
         // Campos de entrada

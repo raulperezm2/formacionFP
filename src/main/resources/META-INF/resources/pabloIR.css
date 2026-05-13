@@ -1,25 +1,23 @@
 
-.eig-cookies {
+.eig {
     text-align: center;
 }
 
-.eig-cookies input {
+.eig input {
     font-size: 1.25em;
-    padding-bottom: 5px;
-    margin-top: 5px;
 }
 
-.eig-cookies label {
+.eig label {
     font-size: 1.25em;
     font-weight: bold;
 }
 
-.eig-cookies span {
+.eig span {
     font-size: 1.25em;
     font-weight: bold;
 }
 
-.eig-cookies vaadin-button {
+.eig vaadin-button {
     font-size: 1.25em;
     font-weight: bold;
     background-color: blue;
@@ -27,12 +25,12 @@
     padding: 15px 30px;
 }
 
-.eig-cookies vaadin-button:hover {
+.eig vaadin-button:hover {
     background-color: green;
     color: white;
 }
 
-.eig-cookies vaadin-button:active {
+.eig vaadin-button:active {
     background-color: yellow;
     color: black;
 }
