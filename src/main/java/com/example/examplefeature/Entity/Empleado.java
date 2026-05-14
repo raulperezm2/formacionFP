@@ -5,7 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
+@Data
 @Entity
 public class Empleado {
     @Id
@@ -34,51 +36,51 @@ public class Empleado {
     @NotEmpty(message = "La última titulación puede estar vacía")
     private String ultima_titulacion;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) { this.edad = edad; }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) { this.apellidos = apellidos; }
-
-    public int getNumTelefono() { return numTelefono; }
-
-    public void setNumTelefono(Integer numTelefono) { this.numTelefono = numTelefono; }
-
-    public String getUltima_titulacion() { return ultima_titulacion; }
-
-    public void setUltima_titulacion(String ultima_titulacion) { this.ultima_titulacion = ultima_titulacion; }
-
-    public String getGenero() { return genero; }
-
-    public void setGenero(String genero) { this.genero = genero; }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public String getNombre() {
+//        return nombre;
+//    }
+//
+//    public void setNombre(String nombre) {
+//        this.nombre = nombre;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public Integer getEdad() {
+//        return edad;
+//    }
+//
+//    public void setEdad(Integer edad) { this.edad = edad; }
+//
+//    public String getApellidos() {
+//        return apellidos;
+//    }
+//
+//    public void setApellidos(String apellidos) { this.apellidos = apellidos; }
+//
+//    public int getNumTelefono() { return numTelefono; }
+//
+//    public void setNumTelefono(Integer numTelefono) { this.numTelefono = numTelefono; }
+//
+//    public String getUltima_titulacion() { return ultima_titulacion; }
+//
+//    public void setUltima_titulacion(String ultima_titulacion) { this.ultima_titulacion = ultima_titulacion; }
+//
+//    public String getGenero() { return genero; }
+//
+//    public void setGenero(String genero) { this.genero = genero; }
 }
