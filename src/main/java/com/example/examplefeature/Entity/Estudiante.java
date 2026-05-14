@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 
 @Entity
 public class Estudiante {
+    //EmpleadosEig, nombre, dni, edad, email, titulacion, experiencia.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
