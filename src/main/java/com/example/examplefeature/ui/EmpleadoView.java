@@ -2,9 +2,11 @@ package com.example.examplefeature.ui;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
@@ -62,15 +64,22 @@ public class EmpleadoView extends VerticalLayout {
     private void showUser(String user) {
         Component logo = getAvatar(user);
         String[] userData = fetchUserData(user);
+        var textLayout = new VerticalLayout();
+        textLayout.setPadding(false);
+        textLayout.setMargin(false);
+        textLayout.setSpacing(false);
         if (userData.length > 0) {
             var userSpan = new Span(userData[0]);
             var userUnit = new Span(userData[1]);
             var userBoss = new Span(userData[2]);
             var userOffice = new Span(userData[3]);
-            add(logo, userSpan, userUnit, userBoss, userOffice);
+            textLayout.add(userSpan, userUnit, userBoss, userOffice);
         } else {
-            add(logo, new Span("No se ha encontrado al usuario"));
+            textLayout.add(new Span("No se ha encontrado al usuario"));
         }
+        var userLayout = new HorizontalLayout();
+        userLayout.add(logo, textLayout);
+        add(userLayout, new Hr());
     }
 
     /**
@@ -103,12 +112,7 @@ public class EmpleadoView extends VerticalLayout {
         try {
             var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
             var uri = URI.create(tokenUrl);
-            var request = HttpRequest.newBuilder()
-                    .uri(uri)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .timeout(Duration.ofSeconds(5))
-                    .POST(HttpRequest.BodyPublishers.ofString(tokenForm))
-                    .build();
+            var request = HttpRequest.newBuilder().uri(uri).header("Content-Type", "application/x-www-form-urlencoded").timeout(Duration.ofSeconds(5)).POST(HttpRequest.BodyPublishers.ofString(tokenForm)).build();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 String body = response.body();
@@ -275,9 +279,7 @@ public class EmpleadoView extends VerticalLayout {
     private String fetchUserImageUrl(String idUser) {
         String token = fetchToken();
         try {
-            var client = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(3))
-                    .build();
+            var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
 
             String encoded = URLEncoder.encode(idUser, StandardCharsets.UTF_8);
             var uri = URI.create("https://svc-0023-00-microservicios-des.apps.infraprev.igrupobbva/image?iduser=" + encoded);
@@ -317,9 +319,7 @@ public class EmpleadoView extends VerticalLayout {
     private String[] fetchUserData(String idUser) {
         String token = fetchToken();
         try {
-            var client = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(3))
-                    .build();
+            var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
 
             String encoded = URLEncoder.encode(idUser, StandardCharsets.UTF_8);
             var uri = URI.create("https://svc-0023-00-microservicios-des.apps.infraprev.igrupobbva/users?iduser=" + encoded);
