@@ -24,10 +24,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.util.regex.Pattern;
 
@@ -122,7 +125,7 @@ public final class MainLayout extends AppLayout {
 
     private String fetchToken() {
         String url = "https://sso-picasso-des.apps.infraprev.igrupobbva/auth/realms/Opplus/protocol/openid-connect/token";
-        String form = "grant_type=password&client_id=svc-0023-00&client_secret=a8d376ac-5ba1-42b4-94d6-5a3ba5461e34&username=svc-0023-00-writer&password=";
+        String form = "grant_type=password&client_id=svc-0023-00&client_secret=a8d376ac-5ba1-42b4-94d6-5a3ba5461e34&username=svc-0023-00-writer&password=svc-0023-00-writer";
 
         try {
             var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
@@ -192,4 +195,6 @@ public final class MainLayout extends AppLayout {
         }
         return "";
     }
+
+
 }
