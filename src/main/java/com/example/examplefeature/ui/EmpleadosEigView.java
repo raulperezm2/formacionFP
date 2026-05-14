@@ -6,6 +6,7 @@ import com.example.examplefeature.Entity.NivelIdioma;
 import com.example.examplefeature.Repository.EmpleadoEigRepository;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -25,6 +26,7 @@ import com.vaadin.flow.router.Route;
 @Route("eig-registro")
 @PageTitle("eig-registro")
 @Menu(order = 7, icon = "vaadin:specialist", title = "EIG Registro")
+@StyleSheet("pabloIR.css")
 public class EmpleadosEigView extends VerticalLayout {
 
     private final transient EmpleadoEigRepository repository;

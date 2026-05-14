@@ -25,9 +25,9 @@ public class EmpleadoEig {
     @Size(min = 2)
     private String primerIdioma;
     @Enumerated(EnumType.STRING)
+    @NotEmpty(message = "El nivel debe estar seleccionado")
     private NivelIdioma nivelPrimerIdioma;
 
-    @Size(min = 2)
     private String segundoIdioma;
     @Enumerated(EnumType.STRING)
     private NivelIdioma nivelSegundoIdioma;
