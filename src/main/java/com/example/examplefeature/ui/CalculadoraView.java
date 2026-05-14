@@ -14,12 +14,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route("calculadora") // URL de la vista
-@PageTitle("Formación | Calculadora")
+@PageTitle("Formac  ión | Calculadora")
 @Menu(order = 1, icon = "vaadin:calc", title = "Calculadora Estudiantes")
 public class CalculadoraView extends VerticalLayout {
 
     public CalculadoraView() {
-        // 1. Configuración del contenedor principal
+        // 1. Configuración del contenedor p    rincipal
         setSpacing(true);
         setAlignItems(Alignment.CENTER); // Centra todo horizontalmente
 
