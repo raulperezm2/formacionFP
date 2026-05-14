@@ -17,7 +17,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route("calculadora") // URL de la vista
+@Route("calculadora123") // URL de la vista
 @PageTitle("Formación | Calculadora")
 @Menu(order = 1, icon = "vaadin:calc", title = "Calculadora Estudiantes")
 
