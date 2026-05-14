@@ -32,9 +32,53 @@ import lombok.Data;
 @StyleSheet("pabloIR.css")
 public class EmpleadoView extends VerticalLayout {
 
+    /**
+     * ID de usuario de Raul
+     */
     private final String USER_RAUL = "e043394";
+    /**
+     * ID de usuario de Monica
+     */
     private final String USER_MONICA = "O018699";
+    /**
+     * Object Mapper para deserializar JSON
+     */
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
+    public EmpleadoView() {
+        addClassName("eig");
+        setSizeFull();
+
+        showUser(USER_RAUL);
+        showUser(USER_MONICA);
+        showUser("T067722");
+    }
+
+    /**
+     * Añadir al usuario recibido a la vista
+     *
+     * @param user ID de usuario a mostrar
+     */
+    private void showUser(String user) {
+        Component logo = getAvatar(user);
+        String[] userData = fetchUserData(user);
+        if (userData.length > 0) {
+            var userSpan = new Span(userData[0]);
+            var userUnit = new Span(userData[1]);
+            var userBoss = new Span(userData[2]);
+            var userOffice = new Span(userData[3]);
+            add(logo, userSpan, userUnit, userBoss, userOffice);
+        } else {
+            add(logo, new Span("No se ha encontrado al usuario"));
+        }
+    }
+
+    /**
+     * Obtener avatar del usuario
+     *
+     * @param user ID de Usuario
+     * @return Componente del avatar de usuario
+     */
     private Component getAvatar(String user) {
         var url = fetchUserImageUrl(user);
         if (url.isBlank()) {
@@ -49,51 +93,9 @@ public class EmpleadoView extends VerticalLayout {
         }
     }
 
-    public EmpleadoView() {
-        addClassName("eig");
-        setSizeFull();
-
-//        String imageUrl = fetchUserImageUrl(USER_RAUL);
-//        Component logo;
-//        if (imageUrl.isBlank()) {
-//            var icon = VaadinIcon.MALE.create();
-//            icon.setColor("Blue");
-//            icon.setSize("128px");
-//            logo = icon;
-//        } else {
-//            var image = new Image(imageUrl, "Raúl");
-//            image.setWidth("128px");
-//            logo = image;
-//        }
-        Component logo = getAvatar(USER_RAUL);
-        add(logo);
-
-        String[] userData = fetchUserData(USER_RAUL);
-        if (userData.length > 0) {
-            var userSpan = new Span(userData[0]);
-            var userUnit = new Span(userData[1]);
-            var userBoss = new Span(userData[2]);
-            var userOffice = new Span(userData[3]);
-            add(logo, userSpan, userUnit, userBoss, userOffice);
-        }
-        else {
-            add(logo, new Span("No se ha encontrado al usuario"));
-        }
-        Component logo2 = getAvatar(USER_MONICA);
-        add(logo2);
-        String[] userData2 = fetchUserData(USER_MONICA);
-        if (userData2.length > 0) {
-            var userSpan2 = new Span(userData2[0]);
-            var userUnit2 = new Span(userData2[1]);
-            var userBoss2 = new Span(userData2[2]);
-            var userOffice2 = new Span(userData2[3]);
-            add(logo2, userSpan2, userUnit2, userBoss2, userOffice2);
-        }
-        else {
-            add(logo, new Span("No se ha encontrado al usuario"));
-        }
-    }
-
+    /**
+     * @return Token de acceso a los servicios
+     */
     private String fetchToken() {
         String tokenUrl = "https://sso-picasso-des.apps.infraprev.igrupobbva/auth/realms/Opplus/protocol/openid-connect/token";
         String tokenForm = "grant_type=password&client_id=svc-0023-00&client_secret=a8d376ac-5ba1-42b4-94d6-5a3ba5461e34&username=svc-0023-00-writer&password=svc-0023-00-writer";
@@ -123,8 +125,9 @@ public class EmpleadoView extends VerticalLayout {
         return "";
     }
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
+    /**
+     * DTO para deserializar Token
+     */
     private static class TokenResponseDTO {
         private final String accessToken;
 
@@ -137,6 +140,9 @@ public class EmpleadoView extends VerticalLayout {
         }
     }
 
+    /**
+     * DTO para deserializar URL de imagenes
+     */
     private static class ImageResponseDTO {
         private final String imagePath;
 
@@ -150,58 +156,110 @@ public class EmpleadoView extends VerticalLayout {
         }
     }
 
+    /**
+     * Deserializar JSON de tokens
+     */
     private TokenResponseDTO deserializeTokenResponse(String json) {
         String accessToken = extractValue(json, "access_token");
         return new TokenResponseDTO(accessToken);
     }
 
+    /**
+     * DTO para deserializar Usuarios
+     */
     @Data
     private static class UserResponseDTO {
-        @JsonProperty("idEmpresa") long idEmpresa;
-        @JsonProperty("id") String id;
-        @JsonProperty("correoPersonal") String email;
-        @JsonProperty("nombre") String nombre;
-        @JsonProperty("primerApellido") String primerApellido;
-        @JsonProperty("segundoApellido") String segundoApellido;
-        @JsonProperty("nombreCompleto") String nombreCompleto;
-        @JsonProperty("matricula") long matricula;
-        @JsonProperty("posicionTrabajador") long posicionTrabajador;
-        @JsonProperty("posicionJefe") long posicionJefe;
-        @JsonProperty("idUsuarioJefe") String idUsuarioJefe;
-        @JsonProperty("nombreCompletoJefe") String nombreCompletoJefe;
-        @JsonProperty("idUnidad") long idUnidad;
-        @JsonProperty("nombreUnidad") String nombreUnidad;
-        @JsonProperty("nivel1") long  nivel1;
-        @JsonProperty("nivel2") long  nivel2;
-        @JsonProperty("nivel3") long   nivel3;
-        @JsonProperty("nivel4") long  nivel4;
-        @JsonProperty("nivel5") long   nivel5;
-        @JsonProperty("nivel6") long    nivel6;
-        @JsonProperty("nivel7") long    nivel7;
-        @JsonProperty("nivel1Nombre") String  nivel1Nombre;
-        @JsonProperty("nivel2Nombre") String   nivel2Nombre;
-        @JsonProperty("nivel3Nombre" ) String    nivel3Nombre;
-        @JsonProperty("nivel4Nombre") String    nivel4Nombre;
-        @JsonProperty("nivel5Nombre") String     nivel5Nombre;
-        @JsonProperty("nivel6Nombre") String      nivel6Nombre;
-        @JsonProperty("nivel7Nombre") String       nivel7Nombre;
-        @JsonProperty("idOrganizacion") long  idOrganizacion;
-        @JsonProperty("nombreOrganizacion") String  nombreOrganizacion;
-        @JsonProperty("idEdificio") long  idEdificio;
-        @JsonProperty("nombreEdificio") String   nombreEdificio;
-        @JsonProperty("idPlanta") long   idPlanta;
-        @JsonProperty("idMesa") String    idMesa;
-        @JsonProperty("telefono") String     telefono;
-        @JsonProperty("telefonoLargo") String       telefonoLargo;
-        @JsonProperty("idOrdenador") String      idOrdenador;
-        @JsonProperty("cargoFuncional") String       cargoFuncional;
-        @JsonProperty("nombreCargo") String        nombreCargo;
-        @JsonProperty("idEstado") long        idEstado;
-        @JsonProperty("fechaMod") String         fechaMod;
-        @JsonProperty("fechaAlta") String          fechaAlta;
-        @JsonProperty("fechaBaja") String           fechaBaja;
+        @JsonProperty("idEmpresa")
+        long idEmpresa;
+        @JsonProperty("id")
+        String id;
+        @JsonProperty("correoPersonal")
+        String email;
+        @JsonProperty("nombre")
+        String nombre;
+        @JsonProperty("primerApellido")
+        String primerApellido;
+        @JsonProperty("segundoApellido")
+        String segundoApellido;
+        @JsonProperty("nombreCompleto")
+        String nombreCompleto;
+        @JsonProperty("matricula")
+        long matricula;
+        @JsonProperty("posicionTrabajador")
+        long posicionTrabajador;
+        @JsonProperty("posicionJefe")
+        long posicionJefe;
+        @JsonProperty("idUsuarioJefe")
+        String idUsuarioJefe;
+        @JsonProperty("nombreCompletoJefe")
+        String nombreCompletoJefe;
+        @JsonProperty("idUnidad")
+        long idUnidad;
+        @JsonProperty("nombreUnidad")
+        String nombreUnidad;
+        @JsonProperty("nivel1")
+        long nivel1;
+        @JsonProperty("nivel2")
+        long nivel2;
+        @JsonProperty("nivel3")
+        long nivel3;
+        @JsonProperty("nivel4")
+        long nivel4;
+        @JsonProperty("nivel5")
+        long nivel5;
+        @JsonProperty("nivel6")
+        long nivel6;
+        @JsonProperty("nivel7")
+        long nivel7;
+        @JsonProperty("nivel1Nombre")
+        String nivel1Nombre;
+        @JsonProperty("nivel2Nombre")
+        String nivel2Nombre;
+        @JsonProperty("nivel3Nombre")
+        String nivel3Nombre;
+        @JsonProperty("nivel4Nombre")
+        String nivel4Nombre;
+        @JsonProperty("nivel5Nombre")
+        String nivel5Nombre;
+        @JsonProperty("nivel6Nombre")
+        String nivel6Nombre;
+        @JsonProperty("nivel7Nombre")
+        String nivel7Nombre;
+        @JsonProperty("idOrganizacion")
+        long idOrganizacion;
+        @JsonProperty("nombreOrganizacion")
+        String nombreOrganizacion;
+        @JsonProperty("idEdificio")
+        long idEdificio;
+        @JsonProperty("nombreEdificio")
+        String nombreEdificio;
+        @JsonProperty("idPlanta")
+        long idPlanta;
+        @JsonProperty("idMesa")
+        String idMesa;
+        @JsonProperty("telefono")
+        String telefono;
+        @JsonProperty("telefonoLargo")
+        String telefonoLargo;
+        @JsonProperty("idOrdenador")
+        String idOrdenador;
+        @JsonProperty("cargoFuncional")
+        String cargoFuncional;
+        @JsonProperty("nombreCargo")
+        String nombreCargo;
+        @JsonProperty("idEstado")
+        long idEstado;
+        @JsonProperty("fechaMod")
+        String fechaMod;
+        @JsonProperty("fechaAlta")
+        String fechaAlta;
+        @JsonProperty("fechaBaja")
+        String fechaBaja;
     }
 
+    /**
+     * Axiliar para extraer el token
+     */
     private String extractValue(String json, String key) {
         Pattern pattern = Pattern.compile("\"" + key + "\"\\s*:\\s*\"([^\"]+)\"");
         Matcher matcher = pattern.matcher(json);
@@ -211,6 +269,9 @@ public class EmpleadoView extends VerticalLayout {
         return "";
     }
 
+    /**
+     * Obtener URL de Usuario
+     */
     private String fetchUserImageUrl(String idUser) {
         String token = fetchToken();
         try {
@@ -250,6 +311,9 @@ public class EmpleadoView extends VerticalLayout {
         return "";
     }
 
+    /**
+     * Obtener datos de Usuario
+     */
     private String[] fetchUserData(String idUser) {
         String token = fetchToken();
         try {
